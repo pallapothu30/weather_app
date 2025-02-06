@@ -1,35 +1,43 @@
-/*
-Steps - 
-1.Get elements button, input ele through DOM manipulation.
-2.add eventlistner on search button to print weather details about city.
-3.create elements dynamically to display weather data of city.
-*/
-
-const button = document.getElementById("search-btn")
-const input = document.getElementById("city")
+const button = document.getElementById("search-btn");
+const input = document.getElementById("city");
 
 const cityName = document.getElementById("loc");
 const cityTime = document.getElementById("time");
-const cityTemprature = document.getElementById("temp")
+const cityTemperature = document.getElementById("temp");
+const weatherIcon = document.getElementById("weather-icon");
+const weatherCondition = document.getElementById("condition");
+const humidity = document.getElementById("humidity");
+const wind = document.getElementById("wind");
 
-
-
-async function getData(cityName) {
-    // through string interpolation
-    const response = await fetch(
-        `https://api.weatherapi.com/v1/current.json?key=0842865d51624f1c9de175748250202&q=${cityName}&aqi=yes`
-    );
-    return await response.json();
+async function getData(city) {
+    try {
+        const response = await fetch(
+            `https://api.weatherapi.com/v1/current.json?key=0842865d51624f1c9de175748250202&q=${city}&aqi=yes`
+        );
+        if (!response.ok) {
+            throw new Error("City not found");
+        }
+        return await response.json();
+    } catch (error) {
+        alert(error.message);
+        return null;
+    }
 }
 
-button.addEventListener('click',async ()=>{
+button.addEventListener("click", async () => {
     const value = input.value;
-    if(!value){
-        console.warn("please enter a city name.")
+    if (!value) {
+        alert("Please enter a city name.");
+        return;
     }
     const result = await getData(value);
-    cityName.innerText = `${result.location.name}, ${result.location.region}, ${result.location.country}`; 
+    if (!result) return;
 
-    cityTime.innerText = `${result.location.localtime}`;
-    cityTemprature.innerText = `${result.current.temp_c}`;
-})
+    cityName.innerText = `${result.location.name}, ${result.location.region}, ${result.location.country}`;
+    cityTime.innerText = `Local Time: ${result.location.localtime}`;
+    cityTemperature.innerText = `${result.current.temp_c}°C`;
+    weatherIcon.src = result.current.condition.icon;
+    weatherCondition.innerText = result.current.condition.text;
+    humidity.innerText = `Humidity: ${result.current.humidity}%`;
+    wind.innerText = `Wind Speed: ${result.current.wind_kph} km/h`;
+});

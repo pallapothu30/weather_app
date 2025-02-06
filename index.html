@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>
-        <input id="city" type="text" placeholder="Enter city name">
-        <button id="search-btn">Search</button>
-    </div>
-    <div >
-        <h3 id = "loc">Vijayawada,Andhra Pradesh,Inida</h3>
-        <h4 id = "time">Local-time 12:10</h4>
-        <h4 id = "temp">Temperature Celsius:26*C.</h4>
+    <div class="container">
+        <h1>Weather App</h1>
+        <div class="search-box">
+            <input id="city" type="text" placeholder="Enter city name">
+            <button id="search-btn">Search</button>
+        </div>
+        <div class="weather-card">
+            <h2 id="loc">Vijayawada, Andhra Pradesh, India</h2>
+            <h3 id="time">Local Time: 12:10</h3>
+            <img id="weather-icon" src="" alt="Weather Icon">
+            <h2 id="temp">26°C</h2>
+            <p id="condition">Clear Sky</p>
+            <p id="humidity">Humidity: 60%</p>
+            <p id="wind">Wind Speed: 10 km/h</p>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
